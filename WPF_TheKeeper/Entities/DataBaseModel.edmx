@@ -1,0 +1,566 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище TheKeeperPRODataBaseModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Division">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameDivision" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="DivisionCode" Type="int" />
+          <Property Name="RoleCode" Type="int" />
+          <Property Name="AccessCode" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ListOFVisitors">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NumberOfVisitor" Type="int" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ImageVisitor" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="PurposeOfVisit">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PurposeOfVisitName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Request">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StartDate" Type="date" Nullable="false" />
+          <Property Name="EndDate" Type="date" Nullable="false" />
+          <Property Name="PurposeOfVisitCode" Type="int" Nullable="false" />
+          <Property Name="DivisionCode" Type="int" Nullable="false" />
+          <Property Name="FullNameEmployeeDivision" Type="nvarchar" MaxLength="150" />
+          <Property Name="SurName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Patronymic" Type="nvarchar" MaxLength="50" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Organization" Type="nvarchar" MaxLength="50" />
+          <Property Name="Note" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DateBirth" Type="date" Nullable="false" />
+          <Property Name="PassportSeries" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PassportID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="VisitorPhoto" Type="varbinary(max)" />
+          <Property Name="StatusRequestCode" Type="int" Nullable="false" />
+          <Property Name="TypeRequestCode" Type="int" Nullable="false" />
+          <Property Name="AttachedDocument" Type="varbinary(max)" />
+          <Property Name="ListOfVisitorsCode" Type="int" />
+          <Property Name="BlackList" Type="bit" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="ArrivalDate" Type="datetime" />
+          <Property Name="DateDeparture" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameRole" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StatusRequest">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StatusName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TypeRequest">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Employee_Division">
+          <End Role="Division" Type="Self.Division" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Division">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="DivisionCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="RoleCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_Division">
+          <End Role="Division" Type="Self.Division" Multiplicity="1" />
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Division">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="DivisionCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_ListOFVisitors">
+          <End Role="ListOFVisitors" Type="Self.ListOFVisitors" Multiplicity="0..1" />
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ListOFVisitors">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="ListOfVisitorsCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_PurposeOfVisit">
+          <End Role="PurposeOfVisit" Type="Self.PurposeOfVisit" Multiplicity="1" />
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurposeOfVisit">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="PurposeOfVisitCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_StatusRequest">
+          <End Role="StatusRequest" Type="Self.StatusRequest" Multiplicity="1" />
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusRequest">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="StatusRequestCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_TypeRequest">
+          <End Role="TypeRequest" Type="Self.TypeRequest" Multiplicity="1" />
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeRequest">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="TypeRequestCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище TheKeeperPRODataBaseModelContainer">
+          <EntitySet Name="Division" EntityType="Self.Division" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ListOFVisitors" EntityType="Self.ListOFVisitors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PurposeOfVisit" EntityType="Self.PurposeOfVisit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Request" EntityType="Self.Request" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StatusRequest" EntityType="Self.StatusRequest" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TypeRequest" EntityType="Self.TypeRequest" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Employee_Division" Association="Self.FK_Employee_Division">
+            <End Role="Division" EntitySet="Division" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Role" Association="Self.FK_Employee_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_Division" Association="Self.FK_Request_Division">
+            <End Role="Division" EntitySet="Division" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_ListOFVisitors" Association="Self.FK_Request_ListOFVisitors">
+            <End Role="ListOFVisitors" EntitySet="ListOFVisitors" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_PurposeOfVisit" Association="Self.FK_Request_PurposeOfVisit">
+            <End Role="PurposeOfVisit" EntitySet="PurposeOfVisit" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_StatusRequest" Association="Self.FK_Request_StatusRequest">
+            <End Role="StatusRequest" EntitySet="StatusRequest" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_TypeRequest" Association="Self.FK_Request_TypeRequest">
+            <End Role="TypeRequest" EntitySet="TypeRequest" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TheKeeperPRODataBaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Division">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameDivision" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_Division" FromRole="Division" ToRole="Employee" />
+          <NavigationProperty Name="Requests" Relationship="Self.FK_Request_Division" FromRole="Division" ToRole="Request" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FullName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DivisionCode" Type="Int32" />
+          <Property Name="RoleCode" Type="Int32" />
+          <Property Name="AccessCode" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Division" Relationship="Self.FK_Employee_Division" FromRole="Employee" ToRole="Division" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_Employee_Role" FromRole="Employee" ToRole="Role" />
+        </EntityType>
+        <EntityType Name="ListOFVisitor">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NumberOfVisitor" Type="Int32" Nullable="false" />
+          <Property Name="FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ImageVisitor" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Requests" Relationship="Self.FK_Request_ListOFVisitors" FromRole="ListOFVisitors" ToRole="Request" />
+        </EntityType>
+        <EntityType Name="PurposeOfVisit">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PurposeOfVisitName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Requests" Relationship="Self.FK_Request_PurposeOfVisit" FromRole="PurposeOfVisit" ToRole="Request" />
+        </EntityType>
+        <EntityType Name="Request">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PurposeOfVisitCode" Type="Int32" Nullable="false" />
+          <Property Name="DivisionCode" Type="Int32" Nullable="false" />
+          <Property Name="FullNameEmployeeDivision" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="SurName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Patronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Organization" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Note" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DateBirth" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PassportSeries" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PassportID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="VisitorPhoto" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="StatusRequestCode" Type="Int32" Nullable="false" />
+          <Property Name="TypeRequestCode" Type="Int32" Nullable="false" />
+          <Property Name="AttachedDocument" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="ListOfVisitorsCode" Type="Int32" />
+          <Property Name="BlackList" Type="Boolean" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="ArrivalDate" Type="DateTime" Precision="3" />
+          <Property Name="DateDeparture" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Division" Relationship="Self.FK_Request_Division" FromRole="Request" ToRole="Division" />
+          <NavigationProperty Name="ListOFVisitor" Relationship="Self.FK_Request_ListOFVisitors" FromRole="Request" ToRole="ListOFVisitors" />
+          <NavigationProperty Name="PurposeOfVisit" Relationship="Self.FK_Request_PurposeOfVisit" FromRole="Request" ToRole="PurposeOfVisit" />
+          <NavigationProperty Name="StatusRequest" Relationship="Self.FK_Request_StatusRequest" FromRole="Request" ToRole="StatusRequest" />
+          <NavigationProperty Name="TypeRequest" Relationship="Self.FK_Request_TypeRequest" FromRole="Request" ToRole="TypeRequest" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameRole" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_Role" FromRole="Role" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="StatusRequest">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StatusName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Requests" Relationship="Self.FK_Request_StatusRequest" FromRole="StatusRequest" ToRole="Request" />
+        </EntityType>
+        <EntityType Name="TypeRequest">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Requests" Relationship="Self.FK_Request_TypeRequest" FromRole="TypeRequest" ToRole="Request" />
+        </EntityType>
+        <Association Name="FK_Employee_Division">
+          <End Role="Division" Type="Self.Division" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Division">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="DivisionCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_Division">
+          <End Role="Division" Type="Self.Division" Multiplicity="1" />
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Division">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="DivisionCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="RoleCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_ListOFVisitors">
+          <End Role="ListOFVisitors" Type="Self.ListOFVisitor" Multiplicity="0..1" />
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ListOFVisitors">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="ListOfVisitorsCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_PurposeOfVisit">
+          <End Role="PurposeOfVisit" Type="Self.PurposeOfVisit" Multiplicity="1" />
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurposeOfVisit">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="PurposeOfVisitCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_StatusRequest">
+          <End Role="StatusRequest" Type="Self.StatusRequest" Multiplicity="1" />
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusRequest">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="StatusRequestCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_TypeRequest">
+          <End Role="TypeRequest" Type="Self.TypeRequest" Multiplicity="1" />
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeRequest">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="TypeRequestCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TheKeeperPRODataBaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Divisions" EntityType="Self.Division" />
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="ListOFVisitors" EntityType="Self.ListOFVisitor" />
+          <EntitySet Name="PurposeOfVisits" EntityType="Self.PurposeOfVisit" />
+          <EntitySet Name="Requests" EntityType="Self.Request" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="StatusRequests" EntityType="Self.StatusRequest" />
+          <EntitySet Name="TypeRequests" EntityType="Self.TypeRequest" />
+          <AssociationSet Name="FK_Employee_Division" Association="Self.FK_Employee_Division">
+            <End Role="Division" EntitySet="Divisions" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_Division" Association="Self.FK_Request_Division">
+            <End Role="Division" EntitySet="Divisions" />
+            <End Role="Request" EntitySet="Requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Role" Association="Self.FK_Employee_Role">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_ListOFVisitors" Association="Self.FK_Request_ListOFVisitors">
+            <End Role="ListOFVisitors" EntitySet="ListOFVisitors" />
+            <End Role="Request" EntitySet="Requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_PurposeOfVisit" Association="Self.FK_Request_PurposeOfVisit">
+            <End Role="PurposeOfVisit" EntitySet="PurposeOfVisits" />
+            <End Role="Request" EntitySet="Requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_StatusRequest" Association="Self.FK_Request_StatusRequest">
+            <End Role="StatusRequest" EntitySet="StatusRequests" />
+            <End Role="Request" EntitySet="Requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_TypeRequest" Association="Self.FK_Request_TypeRequest">
+            <End Role="TypeRequest" EntitySet="TypeRequests" />
+            <End Role="Request" EntitySet="Requests" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище TheKeeperPRODataBaseModelContainer" CdmEntityContainer="TheKeeperPRODataBaseEntities">
+          <EntitySetMapping Name="Divisions">
+            <EntityTypeMapping TypeName="TheKeeperPRODataBaseModel.Division">
+              <MappingFragment StoreEntitySet="Division">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="NameDivision" ColumnName="NameDivision" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="TheKeeperPRODataBaseModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="DivisionCode" ColumnName="DivisionCode" />
+                <ScalarProperty Name="RoleCode" ColumnName="RoleCode" />
+                <ScalarProperty Name="AccessCode" ColumnName="AccessCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ListOFVisitors">
+            <EntityTypeMapping TypeName="TheKeeperPRODataBaseModel.ListOFVisitor">
+              <MappingFragment StoreEntitySet="ListOFVisitors">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="NumberOfVisitor" ColumnName="NumberOfVisitor" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="ImageVisitor" ColumnName="ImageVisitor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PurposeOfVisits">
+            <EntityTypeMapping TypeName="TheKeeperPRODataBaseModel.PurposeOfVisit">
+              <MappingFragment StoreEntitySet="PurposeOfVisit">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="PurposeOfVisitName" ColumnName="PurposeOfVisitName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Requests">
+            <EntityTypeMapping TypeName="TheKeeperPRODataBaseModel.Request">
+              <MappingFragment StoreEntitySet="Request">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="PurposeOfVisitCode" ColumnName="PurposeOfVisitCode" />
+                <ScalarProperty Name="DivisionCode" ColumnName="DivisionCode" />
+                <ScalarProperty Name="FullNameEmployeeDivision" ColumnName="FullNameEmployeeDivision" />
+                <ScalarProperty Name="SurName" ColumnName="SurName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Organization" ColumnName="Organization" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="DateBirth" ColumnName="DateBirth" />
+                <ScalarProperty Name="PassportSeries" ColumnName="PassportSeries" />
+                <ScalarProperty Name="PassportID" ColumnName="PassportID" />
+                <ScalarProperty Name="VisitorPhoto" ColumnName="VisitorPhoto" />
+                <ScalarProperty Name="StatusRequestCode" ColumnName="StatusRequestCode" />
+                <ScalarProperty Name="TypeRequestCode" ColumnName="TypeRequestCode" />
+                <ScalarProperty Name="AttachedDocument" ColumnName="AttachedDocument" />
+                <ScalarProperty Name="ListOfVisitorsCode" ColumnName="ListOfVisitorsCode" />
+                <ScalarProperty Name="BlackList" ColumnName="BlackList" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="ArrivalDate" ColumnName="ArrivalDate" />
+                <ScalarProperty Name="DateDeparture" ColumnName="DateDeparture" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="TheKeeperPRODataBaseModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="NameRole" ColumnName="NameRole" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StatusRequests">
+            <EntityTypeMapping TypeName="TheKeeperPRODataBaseModel.StatusRequest">
+              <MappingFragment StoreEntitySet="StatusRequest">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TypeRequests">
+            <EntityTypeMapping TypeName="TheKeeperPRODataBaseModel.TypeRequest">
+              <MappingFragment StoreEntitySet="TypeRequest">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

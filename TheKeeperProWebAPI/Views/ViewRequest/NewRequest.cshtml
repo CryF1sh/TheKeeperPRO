@@ -1,0 +1,185 @@
+﻿@using TheKeeperProWebAPI.Models;
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_DefaultView";
+    List<VisitPurpose> purposes = ViewData["purposes"] as List<VisitPurpose> ?? new List<VisitPurpose>();
+    List<Employer> employers = ViewData["employers"] as List<Employer> ?? new List<Employer>();
+    List<Division> divisions = ViewData["divisions"] as List<Division> ?? new List<Division>();
+}
+@model User
+<!DOCTYPE html>
+<head>
+    <style>
+         .parent {
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: auto;
+        }
+
+        .block {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .orangeBlock{
+            background: #ff9619;
+            border-radius: 5px;
+            margin: 0px;
+        }
+
+        .greyBlock{
+            background: #a0a0a0;
+            border-radius: 5px;
+        }
+
+        div{
+            margin: 5px;
+            font-size: 18px;
+        }
+        label{
+            text-align: center;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="parent">
+        <div class="block">
+            <form name="RequestForm" method="post">
+            <input type="text" name="userId" hidden readonly value="@Model.UserId" />
+            <table cellpadding="15">
+                <tr>
+                    <td>
+                        <div class="greyBlock">
+                            <div class="orangeBlock">
+                                <label>Информация для пропуска</label>
+                            </div>
+                            <div>
+                                <label>Срок действия заявки</label>
+                            </div>
+                            <div>
+                                С <input type="date" name="startDate"/> по <input type="date" name="endDate"/>
+                            </div>
+                            <div>
+                                <label>Цель посещения</label>
+                            </div>
+                            <div>
+                                <select name="visitPurposeName">
+                                    @{
+                                        foreach (var purpose in purposes)
+                                        {
+                                            <option>@purpose.Name</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="greyBlock">
+                            <div class="orangeBlock">
+                                <label>Принимающая сторона</label>
+                            </div>
+                            <div>Подразделение:</div>
+                            <div>
+                                <select id="divisions" name="divisionName" onchange="divisionNameOnChange()">
+                                    @foreach (var department in divisions)
+                                    {
+                                        <option>@department.Name</option>
+                                    }                                    
+                                </select>
+                                <script>
+                                    function divisionNameOnChange(){
+                                        let opts = document.RequestForm.employeeName.options;
+                                        while (opts.length > 0) {
+                                            opts[opts.length - 1] = null;
+                                        } let divName = document.RequestForm.divisionName.value;
+                                        let a = fetch("../Division/GetEmployeersDivisionAutorisate?div=" + divName)
+                                            .then(respounse => respounse.json())
+                                            .then(data =>{
+                                                    let selecter = document.RequestForm.employeeName;
+
+                                                    for (let e of data) {
+                                                        let newOption = new Option(e,e);
+                                                        selecter.append(newOption);
+                                                    }
+                                            });                                        
+                                    }
+                                </script>
+                            </div>
+                            <div>ФИО:</div>
+                            <div>
+                                <select id="nameOfEmployers" name="employeeName"/>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div class="greyBlock">
+                            <div class="orangeBlock">
+                                <label>Информация о посетителе</label>
+                            </div>
+                            <table>
+                                <tr>
+                                    <td>
+                                        Фамилия:  <br />
+                                        Имя:  <br />
+                                        Отчество:  <br />
+                                        Телефон:  <br />
+                                        E-Male:  <br />
+                                    </td>
+                                    <td>
+                                        <input type="text" name="userSurname" value="@Model.Surname" readonly/> <br />
+                                        <input type="text" name="userName" value="@Model.Name" readonly/> <br />
+                                        <input type="text" name="userPatronymic" value="@Model.Patronymic" readonly/> <br />
+                                        <input type="text" name="userTelephone" value="@Model.Telephone" readonly/> <br />
+                                        <input type="text" name="userMail" value="@Model.Mail" readonly/> <br />
+                                    </td>
+                                    <td>
+                                        Организация:  <br />
+                                        Примечание:  <br />
+                                        Дата рождения:  <br />
+                                        Серия:  <br />
+                                        Номер:  <br />
+                                    </td>
+                                    <td>
+                                        <input type="text" name="organization"/> <br />
+                                        <input type="text" name="note"/> <br />
+                                        <input type="text" name="userDateOfBorn" value="@(Model.DateOfBorn.ToShortDateString())" readonly/> <br />
+                                        <input type="text" name="userPasportSeries" value="@Model.PasportSeries" readonly/> <br />
+                                        <input type="text" name="userPasportNumber" value="@Model.PasportNumber" readonly/> <br />
+                                    </td>
+                                    <td>
+                                        <input type="button" value="Загрузить фото" />
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="greyBlock">
+                            <div class="orangeBlock">
+                                <label>Прикрепляемые документы</label>
+                            </div>
+                            <input type="button" value="Прикрепить файл" />
+                        </div>
+                    </td>
+                    <td>
+                        <input type="reset" value="Очистить форму" />
+                        <input type="submit" value="Отправить заявку" />
+                    </td>
+                </tr>
+            </table>
+        </form>    
+        </div>
+    </div>
+</body>

@@ -1,0 +1,236 @@
+﻿@using TheKeeperProWebAPI.Models;
+@using TheKeeperProWebAPI.ResponesEntities;
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_DefaultView";
+    RequestResponse request = ViewData["request"] as RequestResponse ?? new RequestResponse();
+    List<User> listOfVisiters = ViewData["listOfVisiters"] as List<User> ?? new List<User>();
+    List<VisitPurpose> purposes = ViewData["purposes"] as List<VisitPurpose> ?? new List<VisitPurpose>();
+    List<Employer> employers = ViewData["employers"] as List<Employer> ?? new List<Employer>();
+    List<Division> divisions = ViewData["divisions"] as List<Division> ?? new List<Division>();
+}
+@model User
+<!DOCTYPE html>
+<head>
+    <style>
+         .parent {
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: auto;
+        }
+
+        .block {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .orangeBlock{
+            background: #ff9619;
+            border-radius: 5px;
+            margin: 0px;
+        }
+
+        .greyBlock{
+            background: #a0a0a0;
+            border-radius: 5px;
+        }
+
+        div{
+            margin: 5px;
+            font-size: 18px;
+        }
+        label{
+            text-align: center;
+            display: block;
+        }
+        .tablevisiters{
+            border: 1px solid #000000;            
+        }
+        .inputorangebutton{
+            background: #fff;
+            border: 2px solid #ff9619;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="parent">
+        <div class="block">
+            <form name="RequestForm" method="post">
+            <input type="text" name="userId" hidden readonly value="@Model.UserId" />
+            <table cellpadding="15">
+                <tr>
+                    <td>
+                        <div class="greyBlock">
+                            <div class="orangeBlock">
+                                <label>Информация для пропуска</label>
+                            </div>
+                            <div>
+                                <label>Срок действия заявки</label>
+                            </div>
+                            <div>
+                                    С <input type="date" name="desiredStartDate" value="@request.desiredStartDate.ToString("yyyy-MM-dd")"/> 
+                                    по <input type="date" name="desiredEndDate" value="@(request.desiredEndDate is null ? request.desiredEndDate.ToString(): ((DateTime)request.desiredEndDate).ToString("yyyy-MM-dd"))"/>
+                            </div>
+                            <div>
+                                <label>Цель посещения</label>
+                            </div>
+                            <div>
+                                    <select name="visitPurpouseName">
+                                        @{
+                                            foreach (var purpose in purposes)
+                                            {
+                                                if (purpose.Name == request.visitPurpouseName)
+                                                {
+                                                    <option selected>@purpose.Name</option>
+                                                }
+                                                else
+                                                {
+                                                    <option>@purpose.Name</option>
+                                                }
+                                            }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="greyBlock">
+                            <div class="orangeBlock">
+                                <label>Принимающая сторона</label>
+                            </div>
+                            <div>Подразделение:</div>
+                            <div>
+                                    <select name="employeeDivisionName">
+                                    @{
+                                        foreach (var department in divisions)
+                                        {
+                                            if (department.Name == request.employeeDivisionName)
+                                            {
+                                                <option selected>@department.Name</option>
+                                            }
+                                            else
+                                            {
+                                                <option>@department.Name</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div>ФИО:</div>
+                            <div>
+                                    <select name="employeeName">
+                                    @{
+                                        foreach (var employer in employers)
+                                        {
+                                            if (employer.Name + " " + employer.Surname == request.employeeName)
+                                            {
+                                                <option selected>@employer.Name @employer.Surname</option>
+                                            }
+                                            else
+                                            {
+                                                <option>@employer.Name @employer.Surname</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="greyBlock">
+                            <div class="orangeBlock">
+                                <label>Информация о посетителе</label>
+                            </div>
+                            <table>
+                                <tr>
+                                    <td>
+                                        Фамилия:  <br />
+                                        Имя:  <br />
+                                        Отчество:  <br />
+                                        Телефон:  <br />
+                                        E-Male:  <br />
+                                    </td>
+                                    <td>
+                                        <input type="text" name="userSurname" value="@Model.Surname" readonly/> <br />
+                                        <input type="text" name="userName" value="@Model.Name" readonly/> <br />
+                                        <input type="text" name="userPatronymic" value="@Model.Patronymic" readonly/> <br />
+                                        <input type="text" name="userTelephone" value="@Model.Telephone" readonly/> <br />
+                                        <input type="text" name="userMail" value="@Model.Mail" readonly/> <br />
+                                    </td>
+                                    <td>
+                                        Организация:  <br />
+                                        Примечание:  <br />
+                                        Дата рождения:  <br />
+                                        Серия:  <br />
+                                        Номер:  <br />
+                                    </td>
+                                    <td>
+                                        <input type="text" name="organisation" value="@request.organisation"/> <br />
+                                            <input type="text" name="note" value="@request.note" /> <br />
+                                        <input type="text" name="userDateOfBorn" value="@(Model.DateOfBorn.ToShortDateString())" readonly/> <br />
+                                        <input type="text" name="userPasportSeries" value="@Model.PasportSeries" readonly/> <br />
+                                        <input type="text" name="userPasportNumber" value="@Model.PasportNumber" readonly/> <br />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3"></td>
+                                    <td>
+                                            <input type="submit" class="inputorangebutton" formaction="../ViewRequest/AddUserInrequest" value="Добавить посетителя" formmethod="post"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="greyBlock">
+                            <div class="orangeBlock">
+                                <label>Список посетителей</label>
+                            </div>
+                            <table class="tablevisiters" cellpadding="1" cellspacing="5">
+                                <tr>
+                                    <th><label>N</label></th>
+                                    <th><label>ФИО</label></th>
+                                    <th><label>Контакты</label></th>
+                                    <th><label>Фотография</label></th>
+                                </tr>
+                                    @for(byte i = 0; i < listOfVisiters.Count; i++)
+                                    {
+                                        <tr>
+                                            <td><label>@(i+1)</label></td>
+                                            <td><label>@listOfVisiters[i].Surname @listOfVisiters[i].Name</label></td>
+                                            <td><label>@listOfVisiters[i].Telephone @listOfVisiters[i].Mail</label></td>
+                                            <td><label></label></td>
+                                        </tr>
+                                    }
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="greyBlock">
+                            <div class="orangeBlock">
+                                <label>Прикрепляемые документы</label>
+                            </div>
+                            <input type="button" value="Прикрепить файл" />
+                        </div>
+                    </td>
+                    <td>
+                        <input type="reset" value="Очистить форму" />
+                            <input type="submit" value="Отправить заявку" formmethod="post" formaction="../ViewRequest/NewGroupRequest" />
+                    </td>
+                </tr>
+            </table>
+        </form>    
+        </div>
+    </div>
+</body>

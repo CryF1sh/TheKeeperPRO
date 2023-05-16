@@ -1,0 +1,255 @@
+﻿<Page x:Class="TheKeeperPro.Forms.Pages.SoloRequestPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TheKeeperPro.Forms.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="SoloRequestPage" 
+      Style="{StaticResource pageStyle}"
+      ShowsNavigationUI="False">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="140*"/>
+            <RowDefinition Height="199*"/>
+            <RowDefinition Height="111*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+
+        <!--#region Ректанглы-->
+        <Rectangle Style="{StaticResource recBlock}"/>
+        <Rectangle Style="{StaticResource recNameBlock}"/>
+        <Rectangle Style="{StaticResource recBlock}" Grid.Column="1" Grid.ColumnSpan="2"/>
+        <Rectangle Style="{StaticResource recNameBlock}" Grid.Column="1" Grid.ColumnSpan="2"/>
+        <Rectangle Style="{StaticResource recBlock}" Grid.ColumnSpan="3" Grid.Row="1"/>
+        <Rectangle Style="{StaticResource recNameBlock}" Grid.ColumnSpan="3" Grid.Row="1"/>
+        <Rectangle Style="{StaticResource recBlock}" Grid.ColumnSpan="2" Grid.Row="2"/>
+        <Rectangle Style="{StaticResource recNameBlock}" Grid.ColumnSpan="2" Grid.Row="2"/>
+        <!--#endregion-->
+
+        <!--#region Кнопочки и надписи-->
+        <TextBlock Text="Информация для пропуска" Style="{StaticResource tblTopText}"/>
+        <TextBlock Text="Принимающая сторона" Style="{StaticResource tblTopText}"
+                   Grid.ColumnSpan="2"
+                   Grid.Column="1"/>
+        <TextBlock Text="Информация о посетителе" Style="{StaticResource tblTopText}"
+                   Grid.ColumnSpan="3"
+                   Grid.Row="1"/>
+        <TextBlock Text="Настройка заявки" Style="{StaticResource tblTopText}"
+                   Grid.ColumnSpan="2"
+                   Grid.Row="2"/>
+        <StackPanel Grid.Column="2" Grid.Row="2" 
+                    Orientation="Horizontal"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center">
+            <Button Content="Отменить" Style="{StaticResource btnStyleVhod}"
+                    Margin="15"
+                    Width="100"/>
+            <Button Content="Сохрнаить" Style="{StaticResource btnStyleVhod}"
+                    Margin="15"
+                    Width="100"/>
+        </StackPanel>
+        <!--#endregion-->
+
+        <!--#region Информация для пропуска-->
+        <!--<Grid Margin="5,35,5,5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="22*"/>
+                <RowDefinition Height="30*"/>
+                <RowDefinition Height="17*"/>
+                <RowDefinition Height="31*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Срок действия заявки:" 
+                       Style="{StaticResource textBlockStyleMain}"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0, 2"/>
+            <StackPanel Orientation="Horizontal" 
+                        HorizontalAlignment="Center"
+                        Grid.Row="1">
+                <TextBlock Text="С"
+                           Margin="3"
+                           Style="{StaticResource textBlockStyleMain}"/>
+                <DatePicker Name="dtpBegin"
+                            Style="{StaticResource dtpMain}"/>
+                <TextBlock Text="ПО"
+                           Margin="3"
+                           Style="{StaticResource textBlockStyleMain}"/>
+                <DatePicker Name="dtpEnd" 
+                            Style="{StaticResource dtpMain}"/>
+            </StackPanel>
+            <TextBlock Text="Цель посещения:"
+                       Style="{StaticResource textBlockStyleMain}"
+                       HorizontalAlignment="Center"
+                       Margin="0,3,0,0"
+                       Grid.Row="2"/>
+            <ComboBox x:Name="cmbxPurpous"
+                      Margin="5"
+                      Grid.Row="3"/>
+        </Grid>-->
+        <StackPanel Orientation="Vertical"                    
+                    HorizontalAlignment="Center"
+                    Margin="0,35,0,6">
+            <TextBlock Text="Срок действия заявки:" 
+                       Style="{StaticResource textBlockStyleMain}"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0, 2"/>
+            <StackPanel Orientation="Horizontal" 
+                        HorizontalAlignment="Center">
+                <TextBlock Text="С"
+                           Margin="3"
+                           Style="{StaticResource textBlockStyleMain}"/>
+                <DatePicker Name="dtpBegin"
+                            Style="{StaticResource dtpMain}"/>
+                <TextBlock Text="ПО"
+                           Margin="3"
+                           Style="{StaticResource textBlockStyleMain}"/>
+                <DatePicker Name="dtpEnd" 
+                            Style="{StaticResource dtpMain}"/>
+            </StackPanel>
+            <TextBlock Text="Цель посещения:"
+                       Style="{StaticResource textBlockStyleMain}"
+                       HorizontalAlignment="Center"
+                       Margin="0,3,0,0"/>
+            <ComboBox x:Name="cmbxPurpous"
+                      HorizontalAlignment="Center"
+                      Width="auto"/>
+        </StackPanel>
+        <!--#endregion-->
+
+        <!--#region Принимающая сторона-->
+        <StackPanel Orientation="Vertical"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2"
+                    Margin="0,35,15,0">
+            <TextBlock Text="Подразделенеи:"
+                       Style="{StaticResource textBlockStyleMain}"
+                       Margin="20,2,0,4"/>
+            <ComboBox x:Name="cmbxDevision"
+                      Margin="20,0,0,0"/>
+            <TextBlock Text="ФИО:"
+                       Margin="20,0,0,4"/>
+            <ComboBox x:Name="cmbxEmployers"
+                      Margin="20,0,0,0"/>
+        </StackPanel>
+        <!--#endregion-->
+
+        <!--#region Информация о посетителе-->
+        <StackPanel Orientation="Horizontal"
+                    Grid.ColumnSpan="2"
+                    Grid.Row="1"
+                    Margin="5,35,5,5">
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        Margin="10">
+                <StackPanel Orientation="Vertical"
+                            Margin="0,0,5,0">
+                    <TextBlock Text="Фамилия:"
+                               Style="{StaticResource textBlockStyleMain}"
+                               Margin="5"/>
+                    <TextBlock Text="Имя"
+                               Style="{StaticResource textBlockStyleMain}"
+                               Margin="5"/>
+                    <TextBlock Text="Отчество:"
+                               Style="{StaticResource textBlockStyleMain}"
+                               Margin="5"/>
+                    <TextBlock Text="Телефон:"
+                               Style="{StaticResource textBlockStyleMain}"
+                               Margin="5"/>
+                    <TextBlock Text="Почта:"
+                               Style="{StaticResource textBlockStyleMain}"
+                               Margin="5"/>
+                </StackPanel>
+                <StackPanel Orientation="Vertical">
+                    <TextBox x:Name="tbxSurname"
+                             Style="{StaticResource textBoxStyleMain}"
+                             Margin="5"
+                             Width="130"
+                             Height="17"/>
+                    <TextBox x:Name="tbxName"
+                             Style="{StaticResource textBoxStyleMain}"
+                             Margin="5"
+                             Width="130"
+                             Height="17"/>
+                    <TextBox x:Name="tbxPatronik"
+                             Style="{StaticResource textBoxStyleMain}"
+                             Margin="5"
+                             Width="130"
+                             Height="17"/>
+                    <TextBox x:Name="tbxPhone"
+                             Style="{StaticResource textBoxStyleMain}"
+                             Margin="5"
+                             Width="130"
+                             Height="17"/>
+                    <TextBox x:Name="tbxMail"
+                             Style="{StaticResource textBoxStyleMain}"
+                             Margin="5"
+                             Width="130"
+                             Height="17"/>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        Margin="10">
+                <StackPanel Orientation="Vertical"
+                            Margin="0,0,5,0">
+                    <TextBlock Text="Организация:"
+                               Style="{StaticResource textBlockStyleMain}"
+                               Margin="5"/>
+                    <TextBlock Text="Примечания"
+                               Style="{StaticResource textBlockStyleMain}"
+                               Margin="5"/>
+                    <TextBlock Text="Дата рождения:"
+                               Style="{StaticResource textBlockStyleMain}"
+                               Margin="5"/>
+                    <TextBlock Text="Серия:"
+                               Style="{StaticResource textBlockStyleMain}"
+                               Margin="5"/>
+                    <TextBlock Text="Номер:"
+                               Style="{StaticResource textBlockStyleMain}"
+                               Margin="5"/>
+                </StackPanel>
+                <StackPanel Orientation="Vertical">
+                    <TextBox x:Name="tbxOrganization"
+                             Style="{StaticResource textBoxStyleMain}"
+                             Margin="5"
+                             Width="130"
+                             Height="17"/>
+                    <TextBox x:Name="tbxNote"
+                             Style="{StaticResource textBoxStyleMain}"
+                             Margin="5"
+                             Width="130"
+                             Height="17"/>
+                    <DatePicker x:Name="dtpBirth"
+                             Style="{StaticResource dtpMain}"
+                             Margin="5"
+                             Width="130"/>
+                    <TextBox x:Name="tbxSeriss"
+                             Style="{StaticResource textBoxStyleMain}"
+                             Margin="0"
+                             Width="130"
+                             Height="17"/>
+                    <TextBox x:Name="tbxNum"
+                             Style="{StaticResource textBoxStyleMain}"
+                             Margin="5"
+                             Width="130"
+                             Height="17"/>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+        <Image x:Name="imgUser"
+               Grid.Row="1"
+               Grid.Column="2"
+               Height="120"
+               Width="120"
+               Margin="73,60,73,45"/>
+        <!--#endregion-->
+
+    </Grid>
+</Page>

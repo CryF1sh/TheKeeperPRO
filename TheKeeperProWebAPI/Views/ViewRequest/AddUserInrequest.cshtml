@@ -1,0 +1,118 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using TheKeeperProWebAPI.Models;
+@{
+    Layout = "_DefaultView";
+}
+<head>
+    <title>Регистрация новго пользователя</title>
+    <style>
+        .parent {
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: auto;
+        }
+
+        .block {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .orangeBlock {
+            background: #ff9619;
+            border-radius: 5px;
+            margin: 0px;
+        }
+
+        .greyBlock {
+            background: #a0a0a0;
+            border-radius: 5px;
+        }
+
+        div {
+            margin: 5px;
+            font-size: 18px;
+        }
+
+        label {
+            text-align: center;
+            display: block;
+        }
+
+        .leftLabel{
+            display: block;
+            text-align: left;
+        }
+
+        .inputorangebutton {
+            background: #fff;
+            border: 2px solid #ff9619;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="parent">
+        <div class="block">
+            <form method="post">
+                <div class="greyBlock">
+                    <div class="orangeBlock"> 
+                        <label>Информация о посетителе</label>
+                    </div>
+                    <table>
+                        <tr>
+                            <td><label class="leftLabel">Логин: </label></td>
+                            <td><input type="text" class="inputorangebutton" required name="Login"/></td>
+                        </tr>
+                        <tr>
+                            <td><label class="leftLabel">Пароль: </label></td>
+                            <td><input type="text" class="inputorangebutton" required name="Password"/></td>
+                        </tr>
+                        <tr>
+                            <td><label class="leftLabel">Фамилия: </label></td>
+                            <td><input type="text" class="inputorangebutton" required name="Surname"/></td>
+                        </tr>
+                        <tr>
+                            <td><label class="leftLabel">Имя: </label></td>
+                            <td><input type="text" class="inputorangebutton" required name="Name"/></td>
+                        </tr>
+                        <tr>
+                            <td><label class="leftLabel">Отчество: </label></td>
+                            <td><input type="text" class="inputorangebutton" required name="Patronymic"/></td>
+                        </tr>
+                        <tr>
+                            <td><label class="leftLabel">Телефон: </label></td>
+                            <td><input type="text" class="inputorangebutton" required name="Telephone"/></td>
+                        </tr>
+                        <tr>
+                            <td><label class="leftLabel">E-Mail: </label></td>
+                            <td><input type="text" class="inputorangebutton" required name="Mail"/></td>
+                        </tr>
+                        <tr>
+                            <td><label class="leftLabel">Дата рождения: </label></td>
+                            <td><input type="date" class="inputorangebutton" required name="DateOfBorn" /></td>
+                        </tr>
+                        <tr>
+                            <td><label class="leftLabel">Серия паспорта: </label></td>
+                            <td><input type="text" class="inputorangebutton" required name="PasportSeries" /></td>
+                        </tr>
+                        <tr>
+                            <td><label class="leftLabel">Номер паспорта: </label></td>
+                            <td><input type="text" class="inputorangebutton" required name="PasportNumber" /></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <input type="submit" value="Добавить посетителя" class="inputorangebutton" formaction="../ViewRequest/SaveUserInRequest" formmethod="post"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>

@@ -1,0 +1,44 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using TheKeeperProWebAPI.Models;
+@model User;
+@{}
+<head>
+    <title>Личный кабинет пользователя</title>
+</head>
+<body>
+    <form method="post">
+        Информация о посетителе<br />
+        <table>
+            <tr>
+                <td>
+                    Фамилия:  <br />
+                    Имя:  <br />
+                    Отчество:  <br />
+                    Телефон:  <br />
+                </td>
+                <td>
+                    <input type="text" value=@Model.Surname name="surname" /> <br />
+                    <input type="text" value=@Model.Name name="name" /> <br />
+                    <input type="text" value=@Model.Patronymic name="patronymic" /> <br />
+                    <input type="text" value=@Model.Telephone name="telephone" /> <br />
+                </td>
+                <td>
+                    E-Male:  <br />
+                    Дата рождения:  <br />
+                    Серия:  <br />
+                    Номер:  <br />
+                </td>
+                <td>
+                    <input type="text" value=@Model.Mail name="mail" /> <br />
+                    <input type="date" value=@Model.DateOfBorn.ToString("yyyy-MM-dd") name="dateOfBorn" /> <br />
+                    <input type="text" value=@Model.PasportSeries name="pasportSeries" /> <br />
+                    <input type="text" value=@Model.PasportNumber name="pasportNumber" /> <br />
+                </td>
+            </tr>
+        </table> <br />
+        <input type="submit" value="Сохранить значение" />
+    </form>
+    <a href="../logout">Выйти</a>
+</body>

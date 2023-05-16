@@ -1,0 +1,84 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model string;
+<!DOCTYPE html>
+<head>
+    <style>
+        input[type=text], input[type=password] {
+            width: 250px;
+            padding: 12px 20px;
+            margin: 8px;
+            display: flex;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            text-align:center;
+        }
+        button {
+            background-color: #ff9619;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px;
+            border: none;
+            cursor: pointer;
+            width: 250px;
+            text-align: center;
+        }
+            button:hover {
+                opacity: 0.8;
+            }
+        .container {            
+            display:grid;
+            margin: 20px;
+            vertical-align: middle;  
+            /*text-align: center;*/
+            
+        }
+        form {
+            /*text-align:center;
+            justify-content:center;*/
+        }
+
+        .parent {
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: auto;
+        }
+
+        .block {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        h3{
+            display: block;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="parent">
+        <div class="block">
+            <h3>Авторизация</h3>
+            <form method="post">
+                <div class="container">
+                    <label for="uname"><b>Логин</b></label>
+                    <input type="text" placeholder="Введите логин" name="login" required>
+
+                    <label for="psw"><b>Пароль</b></label>
+                    <input type="password" placeholder="Введите пароль" name="password">
+
+                    <button type="submit">Вход</button>
+                    @if(!string.IsNullOrEmpty(Model))
+                    {
+                        <label>@Model</label>
+                    }
+                </div>
+            </form>
+        </div>
+    </div>
+</body>

@@ -1,0 +1,170 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using TheKeeperProWebAPI.Models;
+@{
+    byte j = 1;
+    Layout = "_DefaultView";
+    RequestToView request = ViewData["request"] as RequestToView ?? new RequestToView();
+    List<ListOfVisiter> visiters = ViewData["visiters"] as List<ListOfVisiter> ?? new List<ListOfVisiter>();
+    List<User> users = ViewData["users"] as List<User> ?? new List<User>();
+}
+@using TheKeeperProWebAPI.ResponesEntities;
+<!DOCTYPE html>
+<head>
+    <style>
+        .parent {
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: auto;
+        }
+
+        .block {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .orangeBlock {
+            background: #ff9619;
+            border-radius: 5px;
+            margin: 0px;
+        }
+
+        .greyBlock {
+            background: #a0a0a0;
+            border-radius: 5px;
+        }
+
+        div {
+            margin: 5px;
+            font-size: 18px;
+        }
+
+        label {
+            text-align: center;
+            display: block;
+        }
+
+        .tablevisiters {
+            border: 1px solid #000000;
+        }
+    </style>
+</head>
+<body>
+    <div class="parent">
+        <div class="block">
+            <form name="RequestForm" method="post">
+                <table cellpadding="15">
+                    <tr>
+                        <td>
+                            <div class="greyBlock">
+                                <div class="orangeBlock">
+                                    <label>Информация для пропуска</label>
+                                </div>
+                                <div>
+                                    <label>Срок действия заявки</label>
+                                </div>
+                                <div>
+                                    С <input type="text" name="startDate" readonly value="@request.desiredStartDate.ToString()" /> по <input type="text" name="endDate" readonly value="@request.desiredEndDate.ToString()" />
+                                </div>
+                                <div>
+                                    <label>Цель посещения</label>
+                                </div>
+                                <div>
+                                    <input type="text" readonly value="@request.visitPurpouseName" size="50"/>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="greyBlock">
+                                <div class="orangeBlock">
+                                    <label>Принимающая сторона</label>
+                                </div>
+                                <div>Подразделение:</div>
+                                <div>
+                                    <input type="text" readonly value="@request.employeeDivisionName" />
+                                </div>
+                                <div>ФИО:</div>
+                                <div>
+                                    <input type="text" readonly value="@request.employeeSurname @request.employeeName" />
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="greyBlock">
+                                <div class="orangeBlock">
+                                    <label>Информация о посетителе</label>
+                                </div>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            Фамилия:  <br />
+                                            Имя:  <br />
+                                            Отчество:  <br />
+                                            Телефон:  <br />
+                                            E-Male:  <br />
+                                        </td>
+                                        <td>
+                                            <input type="text" name="userSurname" value="@request.requestCreaterName" readonly /> <br />
+                                            <input type="text" name="userName" value="@request.requestCreaterSurname" readonly /> <br />
+                                            <input type="text" name="userPatronymic" value="@request.requestCreaterPatronymic" readonly /> <br />
+                                            <input type="text" name="userTelephone" value="@request.requestCreaterTelephone" readonly /> <br />
+                                            <input type="text" name="userMail" value="@request.requestCreaterMail" readonly /> <br />
+                                        </td>
+                                        <td>
+                                            Организация:  <br />
+                                            Примечание:  <br />
+                                            Дата рождения:  <br />
+                                            Серия:  <br />
+                                            Номер:  <br />
+                                        </td>
+                                        <td>
+                                            <input type="text" name="organization" value="@request.organisation" readonly /> <br />
+                                            <input type="text" name="note" value="@request.note" readonly /> <br />
+                                            <input type="text" name="userDateOfBorn" value="@(@request.requestCreaterDateOfBorn == null ? "" : ((DateTime)@request.requestCreaterDateOfBorn).ToShortDateString())" readonly /> <br />
+                                            <input type="text" name="userPasportSeries" value="@request.requestCreaterPasportSeries" readonly /> <br />
+                                            <input type="text" name="userPasportNumber" value="@request.requestCreaterPasportNumber" readonly /> <br />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="greyBlock">
+                                <div class="orangeBlock">
+                                    <label>Список посетителей</label>
+                                </div>
+                                <table class="tablevisiters" cellspacing="5" cellpadding="1">
+                                    <tr>
+                                        <th><label>N</label></th>
+                                        <th><label>ФИО</label></th>
+                                        <th><label>Контакты</label></th>
+                                        <th><label>Фотография</label></th>
+                                    </tr>
+                                    <tr>
+                                    @for (byte i = 0; i < users.Count; i++)
+                                        {
+                                        if (visiters[i].Creater ?? false) { j = 0; continue; }
+                                        <tr>
+                                                <td><label>@(i + j)</label></td>
+                                                <td><label>@users[i].Surname @users[i].Name</label></td>
+                                                <td><label>@users[i].Telephone @users[i].Mail</label></td>
+                                                <td><label></label></td>
+                                            </tr>
+                                        }
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</body>
